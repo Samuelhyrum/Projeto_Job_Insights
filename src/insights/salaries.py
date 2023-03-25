@@ -3,20 +3,22 @@ from typing import Union, List, Dict
 from src.insights.jobs import read
 # from jobs import read
 
+
 def get_max_salary(path: str) -> int:
     data = read(path)
     lista = []
     for item in data:
         if item["max_salary"].isdigit():
-         lista.append(int(item["max_salary"]))
+            lista.append(int(item["max_salary"]))
     return max(lista)
+
 
 def get_min_salary(path: str) -> int:
     data = read(path)
     lista = []
     for item in data:
         if item["min_salary"].isdigit():
-         lista.append(int(item["min_salary"]))
+            lista.append(int(item["min_salary"]))
     return min(lista)
 
 

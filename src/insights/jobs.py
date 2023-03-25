@@ -24,7 +24,6 @@ def get_unique_job_types(path: str) -> List[str]:
     return jobs
 
 
-
 def filter_by_job_type(jobs: List[Dict], job_type: str) -> List[Dict]:
     """Filters a list of jobs by job_type
 

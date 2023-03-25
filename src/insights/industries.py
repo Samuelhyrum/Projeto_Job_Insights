@@ -1,15 +1,14 @@
 from typing import List, Dict
 from src.insights.jobs import read
 # from jobs import read
-import csv
 
 
 def get_unique_industries(path: str) -> List[str]:
     data = read(path)
     lista = []
     for item in data:
-      if item["industry"]:
-        lista.append(item["industry"])
+        if item["industry"]:
+            lista.append(item["industry"])
 
     industry = set(lista)
     return industry
