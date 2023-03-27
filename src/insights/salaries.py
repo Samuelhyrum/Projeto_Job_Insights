@@ -68,4 +68,3 @@ def filter_by_salary_range(
             if validate:
                 lista.append(job)
     return lista
-
