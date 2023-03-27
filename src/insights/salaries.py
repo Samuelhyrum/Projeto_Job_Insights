@@ -22,47 +22,50 @@ def get_min_salary(path: str) -> int:
     return min(lista)
 
 
-def integer(job: Dict, salary: Union[int, str]) -> int:
-    if isinstance(salary, str):
-        salary = int(salary)
-    if isinstance(job["max_salary"], str) and isinstance(
-        job["min_salary"], str
-    ):
-        job["max_salary"] = int(job["max_salary"])
-        job["min_salary"] = int(job["min_salary"])
+def none_type(job: Dict) -> int:
 
-    return job, salary
-
-
-def matches_salary_range(job: Dict, salary: Union[int, str]) -> bool:
-    try:
-        job, salary = integer(job, salary)
-        if job["min_salary"] <= (salary) <= (job["max_salary"]):
-            return True
-        elif job["min_salary"] > (job["max_salary"]):
-            raise ValueError
-        else:
-            return False
-    except(ValueError, TypeError, KeyError):
+    if "min_salary" not in job:
+        raise ValueError
+    elif "max_salary" not in job:
         raise ValueError
 
 
+def integer_type(job: Dict, salary: Union[int, str]) -> int:
+
+    if type(job["min_salary"]) not in [int, str]:
+        raise ValueError
+
+    elif type(job["max_salary"]) not in [int, str]:
+        raise ValueError
+
+    elif type(salary) not in [int, str]:
+        raise ValueError
+
+
+def matches_salary_range(job: Dict, salary: Union[int, str]) -> bool:
+    salary_range = False
+
+    none_type(job)
+    integer_type(job, salary)
+    if int(job["min_salary"]) > int(job["max_salary"]):
+        raise ValueError
+    if int(job["min_salary"]) <= int(salary) <= int(job["max_salary"]):
+        salary_range = True
+    return salary_range
+
+
 def filter_by_salary_range(
-    jobs: List[dict],
-    salary: Union[str, int]
+    jobs: List[dict], salary: Union[str, int]
 ) -> List[Dict]:
-    """Filters a list of jobs by salary range
+    lista = []
+    errors = []
+    for job in jobs:
+        try:
+            validate = matches_salary_range(job, salary)
+        except ValueError as err:
+            errors.append(err)
+        else:
+            if validate:
+                lista.append(job)
+    return lista
 
-    Parameters
-    ----------
-    jobs : list
-        The jobs to be filtered
-    salary : int
-        The salary to be used as filter
-
-    Returns
-    -------
-    list
-        Jobs whose salary range contains `salary`
-    """
-    raise NotImplementedError
